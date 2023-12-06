@@ -24,7 +24,13 @@ services:
       - ./faker:/app
     depends_on:
       - mysql
-    command: "bash -c 'echo Faker container is running; sleep infinity'"
+    command: 
+      - /bin/sh
+      - -c
+      - | 
+        cd /app/ &&
+        npm install &&
+        sleep infinity
 
 volumes:
   mysql-data:
