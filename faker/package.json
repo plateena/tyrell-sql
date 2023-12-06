@@ -1,0 +1,12 @@
+{
+  "name": "faker",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node generateData.js"
+  },
+  "dependencies": {
+    "faker": "^5.5.3",
+    "mysql2": "^2.3.2"
+  }
+}
