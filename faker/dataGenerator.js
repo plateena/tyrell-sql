@@ -88,7 +88,7 @@ export async function generateJobBasicAbility() {
 export async function generateAffiliate() {
     return {
         name: faker.commerce.department(),
-        type: faker.helpers.rangeToNumber({ min: 1, max: 5 }),
+        type: faker.helpers.rangeToNumber({ min: 1, max: 3 }),
         created: faker.date.past(),
         modified: faker.date.past(),
         deleted: getDeleted(),

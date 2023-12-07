@@ -16,14 +16,29 @@ services:
       - ./dumps/schema.sql:/docker-entrypoint-initdb.d/schema.sql
       - ./dumps:/dumps
 
-  faker:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.0
+    container_name: tyrell-elasticsearch
+    environment:
+      - discovery.type=single-node
+      - ELASTIC_PASSWORD=secret
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200"
+    volumes:
+      - es-data:/usr/share/elasticsearch/data
+      - ./elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+
+  nodejs:
     image: node:14
-    container_name: tyrell-faker
+    container_name: tyrell-nodejs
     working_dir: /app
     volumes:
       - ./faker:/app
+      - ./dumps:/dumps
     depends_on:
       - mysql
+      - elasticsearch 
     command: 
       - /bin/sh
       - -c
@@ -34,3 +49,4 @@ services:
 
 volumes:
   mysql-data:
+  es-data:
