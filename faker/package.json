@@ -6,7 +6,8 @@
     "start": "node generateData.js"
   },
   "dependencies": {
-    "faker": "^5.5.3",
+    "@faker-js/faker": "^8.3.1",
+    "lodash": "^4.17.21",
     "mysql2": "^2.3.2"
   }
 }
