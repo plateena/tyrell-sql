@@ -65,19 +65,23 @@ LEFT JOIN basic_abilities BasicAbilities ON BasicAbilities.id = JobsBasicAbiliti
 
 -- Joining Jobs to JobsTools and Tools (Affiliates)
 LEFT JOIN jobs_tools JobsTools ON Jobs.id = JobsTools.job_id
-LEFT JOIN affiliates Tools ON Tools.type = 1 AND Tools.id = JobsTools.affiliate_id AND Tools.deleted IS NULL
 
 -- Joining Jobs to JobsCareerPaths and CareerPaths (Affiliates)
 LEFT JOIN jobs_career_paths JobsCareerPaths ON Jobs.id = JobsCareerPaths.job_id
-LEFT JOIN affiliates CareerPaths ON CareerPaths.type = 3 AND CareerPaths.id = JobsCareerPaths.affiliate_id AND CareerPaths.deleted IS NULL
 
 -- Joining Jobs to JobsRecQualifications and RecQualifications (Affiliates)
 LEFT JOIN jobs_rec_qualifications JobsRecQualifications ON Jobs.id = JobsRecQualifications.job_id
-LEFT JOIN affiliates RecQualifications ON RecQualifications.type = 2 AND RecQualifications.id = JobsRecQualifications.affiliate_id AND RecQualifications.deleted IS NULL
 
 -- Joining Jobs to JobsReqQualifications and ReqQualifications (Affiliates)
 LEFT JOIN jobs_req_qualifications JobsReqQualifications ON Jobs.id = JobsReqQualifications.job_id
-LEFT JOIN affiliates ReqQualifications ON ReqQualifications.type = 2 AND ReqQualifications.id = JobsReqQualifications.affiliate_id AND ReqQualifications.deleted IS NULL
+
+-- join with affiliates with all Job_tools, job_career_paths, job_rec_qualifications and job_req_qualifications
+LEFT JOIN affiliates ON  (
+        ( affiliates.id = JobsTools.affiliate_id  AND affiliates.type = 1 )
+        OR ( affiliates.id = JobCareerPaths.affiliate_id AND affiliates.type = 3 )
+        OR ( affiliates.id = JobsRecQualifications.affiliate_id  AND affiliates.type = 2 )
+        OR ( affiliates.id = JobsReqQualifications.affiliate_id AND affiliates.type = 2 )
+    ) AND affiliates.deleted IS NULL
 
 -- Joining Jobs to JobCategories
 INNER JOIN job_categories JobCategories ON JobCategories.id = Jobs.job_category_id AND JobCategories.deleted IS NULL
@@ -103,10 +107,7 @@ WHERE
         OR Personalities.name LIKE '%ba%'
         OR PracticalSkills.name LIKE '%ba%'
         OR BasicAbilities.name LIKE '%ba%'
-        OR Tools.name LIKE '%ba%'
-        OR CareerPaths.name LIKE '%ba%'
-        OR RecQualifications.name LIKE '%ba%'
-        OR ReqQualifications.name LIKE '%ba%'
+        OR affiliates.name LIKE '%ba%'
     )
     AND Jobs.publish_status = 1
     AND Jobs.deleted IS NULL

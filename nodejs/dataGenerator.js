@@ -1,6 +1,17 @@
 import { faker } from '@faker-js/faker';
 import Database from './db.js'
 import { eitherValOrNull } from './helpers.js'
+import moment from 'moment';
+
+const convertToMySQLDatetime = (originalDate) => {
+    // Format the date using moment.js
+    const formattedDate = moment(originalDate).format('YYYY-MM-DD HH:mm:ss');
+    return formattedDate;
+};
+
+const getDeDate = () => {
+    return convertToMySQLDatetime(faker.date.past());
+};
 
 const dbConfig = {
     host: 'mysql',
@@ -16,7 +27,7 @@ function getDeleted() {
     // return null;
     return faker.helpers.weightedArrayElement([
         { weight: 9, value: null },
-        { weight: 1, value: faker.date.past() }
+        { weight: 1, value: getDeDate() }
     ])
 }
 
@@ -25,8 +36,8 @@ export async function generateJobCategory() {
         name: faker.person.jobArea(),
         sort_order: faker.number.int(50),
         created_by: faker.number.int(50),
-        created: faker.date.past(),
-        modified: faker.date.past(),
+        created: getDeDate(),
+        modified: getDeDate(),
         deleted: getDeleted(),
     };
 }
@@ -34,8 +45,8 @@ export async function generateJobCategory() {
 export async function generatePersonality() {
     return {
         name: faker.person.bio(),
-        created: faker.date.past(),
-        modified: faker.date.past(),
+        created: getDeDate(),
+        modified: getDeDate(),
         deleted: getDeleted(),
     };
 }
@@ -52,8 +63,8 @@ export async function generateJobPersonality() {
 export async function generatePracticalSkill() {
     return {
         name: faker.person.bio(),
-        created: faker.date.past(),
-        modified: faker.date.past(),
+        created: getDeDate(),
+        modified: getDeDate(),
         deleted: getDeleted(),
     };
 }
@@ -70,8 +81,8 @@ export async function generateJobPracticalSkill() {
 export async function generateBasicAbility() {
     return {
         name: faker.person.zodiacSign(),
-        created: faker.date.past(),
-        modified: faker.date.past(),
+        created: getDeDate(),
+        modified: getDeDate(),
         deleted: getDeleted(),
     };
 }
@@ -89,8 +100,8 @@ export async function generateAffiliate() {
     return {
         name: faker.commerce.department(),
         type: faker.helpers.rangeToNumber({ min: 1, max: 3 }),
-        created: faker.date.past(),
-        modified: faker.date.past(),
+        created: getDeDate(),
+        modified: getDeDate(),
         deleted: getDeleted(),
     };
 }
@@ -137,8 +148,8 @@ export async function generateJobType() {
         job_category_id: jobCategoryId,
         sort_order: faker.number.int(50),
         created_by: faker.number.int(50),
-        created: faker.date.past(),
-        modified: faker.date.past(),
+        created: getDeDate(),
+        modified: getDeDate(),
         deleted: getDeleted(),
     };
 }
@@ -174,8 +185,8 @@ export async function generateJobRecord() {
         publish_status: faker.datatype.boolean(),
         version: faker.number.int(50),
         created_by: faker.number.int(50),
-        created: faker.date.past(),
-        modified: faker.date.past(),
+        created: getDeDate(),
+        modified: getDeDate(),
         deleted: getDeleted(),
     };
 }

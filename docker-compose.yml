@@ -34,7 +34,7 @@ services:
     container_name: tyrell-nodejs
     working_dir: /app
     volumes:
-      - ./faker:/app
+      - ./nodejs:/app
       - ./dumps:/dumps
     depends_on:
       - mysql

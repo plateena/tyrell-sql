@@ -68,7 +68,8 @@ class Database {
 
             const sql = `INSERT INTO ${tableName} (${keys.join(', ')}) VALUES ?`;
 
-            await this.query(sql, [values]);
+            const uniqueValues = [...new Set(values.map(JSON.stringify))].map(JSON.parse);
+            await this.query(sql, [uniqueValues]);
             console.log(`Data successfully inserted into ${tableName}`);
         } catch (error) {
             console.error(`Error inserting data into ${tableName}:`, error);
