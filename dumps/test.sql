@@ -91,26 +91,26 @@ ON (JobCategories.id = (Jobs.job_category_id)
 INNER JOIN job_types JobTypes
 ON (JobTypes.id = (Jobs.job_type_id)
     AND (JobTypes.deleted) IS NULL)
-WHERE ((JobCategories.name LIKE '%ba%'
-        OR JobTypes.name LIKE '%ba%'
-        OR Jobs.name LIKE '%ba%'
-        OR Jobs.description LIKE '%ba%'
-        OR Jobs.detail LIKE '%ba%'
-        OR Jobs.business_skill LIKE '%ba%'
-        OR Jobs.knowledge LIKE '%ba%'
-        OR Jobs.location LIKE '%ba%'
-        OR Jobs.activity LIKE '%ba%'
-        OR Jobs.salary_statistic_group LIKE '%ba%'
-        OR Jobs.salary_range_remarks LIKE '%ba%'
-        OR Jobs.restriction LIKE '%ba%'
-        OR Jobs.remarks LIKE '%ba%'
-        OR Personalities.name LIKE '%ba%'
-        OR PracticalSkills.name LIKE '%ba%'
-        OR BasicAbilities.name LIKE '%ba%'
-        OR Tools.name LIKE '%ba%'
-        OR CareerPaths.name LIKE '%ba%'
-        OR RecQualifications.name LIKE '%ba%'
-        OR ReqQualifications.name LIKE '%ba%')
+WHERE ((JobCategories.name LIKE ?
+        OR JobTypes.name LIKE ?
+        OR Jobs.name LIKE ?
+        OR Jobs.description LIKE ?
+        OR Jobs.detail LIKE ?
+        OR Jobs.business_skill LIKE ?
+        OR Jobs.knowledge LIKE ?
+        OR Jobs.location LIKE ?
+        OR Jobs.activity LIKE ?
+        OR Jobs.salary_statistic_group LIKE ?
+        OR Jobs.salary_range_remarks LIKE ?
+        OR Jobs.restriction LIKE ?
+        OR Jobs.remarks LIKE ?
+        OR Personalities.name LIKE ?
+        OR PracticalSkills.name LIKE ?
+        OR BasicAbilities.name LIKE ?
+        OR Tools.name LIKE ?
+        OR CareerPaths.name LIKE ?
+        OR RecQualifications.name LIKE ?
+        OR ReqQualifications.name LIKE ?)
     AND publish_status = 1
     AND (Jobs.deleted) IS NULL)
 GROUP BY Jobs.id

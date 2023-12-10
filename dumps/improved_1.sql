@@ -78,7 +78,7 @@ LEFT JOIN jobs_req_qualifications JobsReqQualifications ON Jobs.id = JobsReqQual
 -- join with affiliates with all Job_tools, job_career_paths, job_rec_qualifications and job_req_qualifications
 LEFT JOIN affiliates ON  (
         ( affiliates.id = JobsTools.affiliate_id  AND affiliates.type = 1 )
-        OR ( affiliates.id = JobCareerPaths.affiliate_id AND affiliates.type = 3 )
+        OR ( affiliates.id = JobsCareerPaths.affiliate_id AND affiliates.type = 3 )
         OR ( affiliates.id = JobsRecQualifications.affiliate_id  AND affiliates.type = 2 )
         OR ( affiliates.id = JobsReqQualifications.affiliate_id AND affiliates.type = 2 )
     ) AND affiliates.deleted IS NULL

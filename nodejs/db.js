@@ -20,10 +20,25 @@ class Database {
         }
     }
 
+    async execute(sql, values) {
+        let connection;
+        try {
+            connection = await this.pool.getConnection();
+            const [result, fields] = await connection.execute(sql, values);
+            return [result, fields];
+        } catch (error) {
+            throw error;
+        } finally {
+            if (connection) {
+                connection.release();
+            }
+        }
+    }
+
     async connect() {
         try {
             await this.pool.getConnection();
-            console.log('Connected to the database');
+            // console.log('Connected to the database');
         } catch (error) {
             console.error('Error connecting to the database:', error);
             throw error; // Re-throw the error to propagate it
@@ -49,6 +64,7 @@ class Database {
         }
     }
     async generateTableData(tableName, numRecords, fieldGenerator) {
+        console.log(`Start generating data for table ${tableName}`)
         const records = await Promise.all(
             Array.from({ length: numRecords }, async () => {
                 try {
@@ -73,6 +89,46 @@ class Database {
             console.log(`Data successfully inserted into ${tableName}`);
         } catch (error) {
             console.error(`Error inserting data into ${tableName}:`, error);
+            throw error;
+        }
+    }
+
+    async beginTransaction() {
+        let connection;
+        try {
+            connection = await this.pool.getConnection();
+            await connection.beginTransaction();
+            console.log('Transaction started');
+            return connection;
+        } catch (error) {
+            if (connection) {
+                connection.release();
+            }
+            console.error('Error starting transaction:', error);
+            throw error;
+        }
+    }
+
+    async commitTransaction(connection) {
+        try {
+            await connection.commit();
+            connection.release();
+            console.log('Transaction committed');
+        } catch (error) {
+            await connection.rollback();
+            connection.release();
+            console.error('Error committing transaction:', error);
+            throw error;
+        }
+    }
+
+    async rollbackTransaction(connection) {
+        try {
+            await connection.rollback();
+            connection.release();
+            console.log('Transaction rolled back');
+        } catch (error) {
+            console.error('Error rolling back transaction:', error);
             throw error;
         }
     }

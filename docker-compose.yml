@@ -10,7 +10,7 @@ services:
       MYSQL_USER: tyrellroot
       MYSQL_PASSWORD: secret
     ports:
-      - "3306:3306"
+      - "33060:3306"
     volumes:
       - mysql-data:/var/lib/mysql
       - ./dumps/schema.sql:/docker-entrypoint-initdb.d/schema.sql
@@ -29,13 +29,14 @@ services:
       - es-data:/usr/share/elasticsearch/data
       - ./elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
 
-  nodejs:
+  app:
     image: node:14
-    container_name: tyrell-nodejs
+    container_name: tyrell-app
     working_dir: /app
     volumes:
       - ./nodejs:/app
       - ./dumps:/dumps
+      - ./result:/result
     depends_on:
       - mysql
       - elasticsearch 

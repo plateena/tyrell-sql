@@ -45,7 +45,15 @@ JobTypes.created_by AS `JobTypes__created_by`,
 JobTypes.created AS `JobTypes__created`,
 JobTypes.modified AS `JobTypes__modified`,
 JobTypes.deleted AS `JobTypes__deleted`,
-Personalities.name AS `Personalities__name`
+
+Personalities.name AS `Personalities__name`,
+PracticalSkills.name AS PracticalSkills__name ,
+BasicAbilities.name AS BasicAbilities__name ,
+Tools.name AS Tools__name ,
+CareerPaths.name AS CareerPaths__name ,
+RecQualifications.name AS RecQualifications__name ,
+ReqQualifications.name AS ReqQualifications__name
+
 FROM jobs Jobs
 LEFT JOIN jobs_personalities JobsPersonalities
 ON Jobs.id = (JobsPersonalities.job_id)
@@ -93,6 +101,5 @@ INNER JOIN job_types JobTypes
 ON (JobTypes.id = (Jobs.job_type_id)
     AND (JobTypes.deleted) IS NULL)
 WHERE ( publish_status = 1 AND (Jobs.deleted) IS NULL)
-GROUP BY Jobs.id
 ORDER BY Jobs.sort_order desc,
 Jobs.id DESC
