@@ -32,7 +32,10 @@ const executeQuery = async (query, val = 'a') => {
         console.time('Query Time');
         const [rows, fields] = await db.query(query, search);
         console.timeEnd('Query Time');
-        console.log('Query results count:', rows.length);
+        if (search.length > 0) {
+            console.log('Searching for:', val);
+        }
+        console.log('Query results count (limit 50):', rows.length);
     } catch (error) {
         console.error('Error executing query:', error);
     } finally {

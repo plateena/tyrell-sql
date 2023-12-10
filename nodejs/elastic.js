@@ -54,7 +54,7 @@ class ElasticsearchSearch {
             await fs.writeFile(outputFilePath, JSON.stringify(sourceFields, null, 2));
 
             console.log('Results written to:', outputFilePath);
-            console.log('Total results:', result.hits.total.value);
+            console.log('Total hits results:', result.hits.total.value);
 
             return result.hits;
         } catch (error) {

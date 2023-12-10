@@ -1,1 +1,0 @@
-SELECT * FROM jobs WHERE id LIKE '%1%'
